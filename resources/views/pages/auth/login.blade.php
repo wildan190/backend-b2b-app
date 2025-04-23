@@ -17,11 +17,22 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="auth-container">
+
+                        {{-- Error Message --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" id="email" class="form-control" required>
+                                <input type="email" name="email" id="email" class="form-control"
+                                    value="{{ old('email') }}" required autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
@@ -42,13 +53,13 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
 
 @section('styles')
     <style>
-
         .auth-wrapper {
             min-height: 100vh;
             background-color: #f5f5f5;

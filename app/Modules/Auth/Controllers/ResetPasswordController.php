@@ -4,8 +4,8 @@ namespace App\Modules\Auth\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Auth\Request\ResetPasswordRequest;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
+use App\Modules\Auth\Jobs\ResetPasswordJob;
+use App\Modules\Auth\Action\ResetPasswordAction;
 
 class ResetPasswordController extends Controller
 {
@@ -14,20 +14,13 @@ class ResetPasswordController extends Controller
         return view('pages.auth.reset-password', ['token' => $token]);
     }
 
-    public function reset(ResetPasswordRequest $request)
+    public function reset(ResetPasswordRequest $request, ResetPasswordAction $action)
     {
-        $response = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->password = Hash::make($password);
-                $user->save();
-            }
-        );
+        $data = $request->only('email', 'password', 'password_confirmation', 'token');
 
-        if ($response == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', trans($response));
-        }
+        $action->execute($data);
+        ResetPasswordJob::dispatch($data);
 
-        return back()->withErrors(['email' => trans($response)]);
+        return redirect()->route('login')->with('status', 'Reset password sedang diproses. Cek email Anda sebentar lagi.');
     }
 }

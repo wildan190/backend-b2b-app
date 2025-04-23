@@ -11,7 +11,7 @@ class LoginAction
         $success = Auth::attempt(['email' => $email, 'password' => $password], $remember);
 
         if ($success) {
-            session(['2fa_verified' => false]); // Reset session
+            session(['2fa_verified' => false]);
         }
 
         return $success;
