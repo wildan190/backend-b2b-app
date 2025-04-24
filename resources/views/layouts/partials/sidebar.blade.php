@@ -47,7 +47,7 @@
 {{-- Sidebar Desktop --}}
 <div class="d-none d-md-flex flex-column justify-content-between position-fixed top-0 start-0 bg-black text-white vh-100 p-3" style="width: 250px;">
     <div>
-        <h4 class="text-warning mb-4">Admin</h4>
+        <h4 class="text-warning mb-4">ADMIN</h4>
         <div class="profile-card text-center mb-4">
             <div class="avatar rounded-circle bg-warning text-black"
                 style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px;">
@@ -61,6 +61,21 @@
                 <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} text-white"
                     href="{{ route('dashboard') }}">
                     <i class="fa fa-home me-1"></i> Dashboard
+                </a>
+            </li>
+        </ul>
+        {{-- separate --}}
+        <hr class="text-warning">
+        <h6 class="text-warning mb-4">MENU</h6>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }} text-white"
+                    href="{{ route('dashboard') }}">
+                    <i class="fa fa-tasks me-1"></i> My Requests
+                </a>
+                <a class="nav-link {{ request()->routeIs('') ? 'active' : '' }} text-white"
+                    href="{{ route('dashboard') }}">
+                    <i class="fa fa-folder-open me-1"></i> All Requests
                 </a>
             </li>
         </ul>
